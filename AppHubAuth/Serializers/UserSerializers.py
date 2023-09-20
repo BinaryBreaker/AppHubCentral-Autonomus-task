@@ -6,12 +6,13 @@ from ..other.ModelHelpingData import validate_password
 
 
 class AppHubUserSerializer(serializers.ModelSerializer):
-    dp_uri = FileModelSerializer(source="dp",allow_null=True, required=False)
+    dp_uri = FileModelSerializer(source="dp", allow_null=True, required=False)
     date_joined = serializers.DateTimeField(format="%d %b %Y", read_only=True)
     username = serializers.CharField(required=True, allow_null=False, allow_blank=False)
     password = serializers.CharField(required=True, allow_null=False, allow_blank=False, write_only=True)
     dp = serializers.PrimaryKeyRelatedField(queryset=FileModelSerializer.Meta.model.objects.all(), required=False,
-                                             allow_null=True,write_only=True)
+                                            allow_null=True, write_only=True)
+
     # validate password
     def validate_password(self, value):
         print(value)
