@@ -16,12 +16,21 @@ class BaseView(APIView):
     model_name = None
     primarySearchField = "id"
     putPrimaryKey = "id"
+    userFiled = "user"
     allowed_methods = ['GET', 'POST', 'PUT', 'DELETE']
 
     def delete(self, request, *args, **kwargs):
+        if "DELETE" not in self.allowed_methods:
+            return self.http_method_not_allowed()
+
         pk = request.data.get(self.primarySearchField, None)
+        print(pk)
+        if pk is None:
+            return CustomJsonResponse({
+                "error": f"{self.primarySearchField} is required",
+            }, status=status.HTTP_400_BAD_REQUEST)
         try:
-            record = self.Model.objects.get(**{self.primarySearchField: pk})
+            record = self.Model.objects.get(**{self.primarySearchField: pk, self.userFiled: request.user.id})
             record.delete()
             return CustomJsonResponse({
                 'message': f'{self.model_name} Deleted',
@@ -32,9 +41,15 @@ class BaseView(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, *args, **kwargs):
+        if "GET" not in self.allowed_methods:
+            return self.http_method_not_allowed()
         pk = kwargs.get(self.primarySearchField, None)
+        if pk is None:
+            return CustomJsonResponse({
+                "error": f"{self.primarySearchField} is required",
+            }, status=status.HTTP_400_BAD_REQUEST)
         try:
-            record = self.Model.objects.get(**{self.primarySearchField: pk})
+            record = self.Model.objects.get(**{self.primarySearchField: pk, self.userFiled: request.user.id})
             serializer = self.serializer_class(record)
             return CustomJsonResponse({
                 'message': f'{self.model_name}',
@@ -46,6 +61,8 @@ class BaseView(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, *args, **kwargs):
+        if "POST" not in self.allowed_methods:
+            return self.http_method_not_allowed()
         data = request.data
         data["user"] = request.user.id
         newRecord = self.serializer_class(data=data)
@@ -61,6 +78,8 @@ class BaseView(APIView):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs):
+        if "PUT" not in self.allowed_methods:
+            return self.http_method_not_allowed()
         data = request.data
         print(data)
 
@@ -72,7 +91,8 @@ class BaseView(APIView):
         pk = data[self.putPrimaryKey]
 
         try:
-            record = self.Model.objects.get(**{self.putPrimaryKey: pk})
+            record = self.Model.objects.get(**{self.putPrimaryKey: pk, self.userFiled: request.user.id})
+            data["user"] = request.user.id
             serializer = self.serializer_class(record, data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -89,8 +109,10 @@ class BaseView(APIView):
                 "error": f"{self.model_name} Does Not Exist",
             }, status=status.HTTP_404_NOT_FOUND)
 
-
-
+    def http_method_not_allowed(self):
+        return CustomJsonResponse({
+            "error": f"Method Not Allowed",
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class BaseListView(generics.ListAPIView):
@@ -98,7 +120,7 @@ class BaseListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = None
     Model = None
-    primarySearchField = "id"
+    primarySearchField = "name__icontains"
     query_field = "name"
     userField = "user"
 
@@ -106,6 +128,7 @@ class BaseListView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         name = self.request.query_params.get(self.query_field, None)
+        print(name)
         if name is not None:
             return self.Model.objects.filter(**{self.userField: user, self.primarySearchField: name}).order_by('-id')
         return self.Model.objects.filter(**{self.userField: user}).order_by('-id')

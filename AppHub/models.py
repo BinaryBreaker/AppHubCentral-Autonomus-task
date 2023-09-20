@@ -20,7 +20,7 @@ class SubscriptionPlan(models.Model):
 class App(models.Model):
     image = models.ForeignKey(FileModel, null=False, blank=False, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=False)
-    subScriptionPlan = models.ForeignKey(SubscriptionPlan, null=False, blank=False, on_delete=models.CASCADE)
+    subscription_plan = models.ForeignKey(SubscriptionPlan, null=False, blank=False, on_delete=models.CASCADE)
     description = models.TextField(null=False)
     metaDescription = models.CharField(max_length=300)
     user = models.ForeignKey(AppHubUser, on_delete=models.CASCADE, related_name='apps')

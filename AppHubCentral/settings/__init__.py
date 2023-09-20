@@ -47,7 +47,16 @@ TEMPLATES = [
         },
     },
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    "DEFAULT_PAGINATION_CLASS": "AppHubAuth.other.pagination.StandardResultsSetPagination",
 
+}
 WSGI_APPLICATION = 'AppHubCentral.wsgi.application'
 
 # Password validation
