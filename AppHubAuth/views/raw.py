@@ -12,7 +12,10 @@ from AppHubAuth.other.CustomJsonResponse import CustomJsonResponse
 @permission_classes([IsAuthenticated])
 def uploadFile(request):
     data = request.data
-    file = data.get('file')
-    File = FileModel.objects.create(file=file, uploaded_by=request.user)
-    serializer = FileModelSerializer(File)
-    return CustomJsonResponse(serializer.data, status=status.HTTP_200_OK)
+    data._mutable = True
+    data['uploaded_by'] = request.user.id
+    serializerFile = FileModelSerializer(data=data)
+    if serializerFile.is_valid():
+        serializerFile.save()
+        return CustomJsonResponse(serializerFile.data, status=status.HTTP_201_CREATED)
+    return CustomJsonResponse(serializerFile.errors, status=status.HTTP_400_BAD_REQUEST)

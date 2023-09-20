@@ -5,6 +5,7 @@ from .views import *
 
 urlpatterns = [
                   path('api-token-auth/', CustomAuthToken.as_view(), name="api-token-auth"),
+                  path('sing-up/', SingUp, name="sing-up"),
                   path('upload-file', uploadFile, name="upload-file"),
                   path('change-password', ChangePassword, name="change-password"),
                   path('reset-password', resetPasswordView, name="reset-password"),

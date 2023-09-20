@@ -4,6 +4,6 @@ from .models import *
 # Register your models here.
 
 
-admin.register(FileModel)
-admin.register(AppHubUser)
-admin.register(Otp)
+admin.site.register(FileModel)
+admin.site.register(AppHubUser)
+admin.site.register(Otp)
