@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "e9e2e9bb-29b2-4db0-a305-c2a9d75f706c",
+		"name": "AppHubCentral",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29872023"
+	},
+	"item": [
+		{
+			"name": "unAuthorized",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"Al2i1@gmail.com\",\r\n    \"password\": \"a@dasdas1dad\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}api-token-auth/"
+							},
+							"response": []
+						},
+						{
+							"name": "SingUp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"full_name\": \"Ali\",\r\n    \"username\": \"ali311\",\r\n    \"email\": \"ali311@gmail.com\",\r\n    \"password\": \"a@dasdas1dad\",\r\n    \"dp\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}sing-up/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"item": [
+						{
+							"name": "Forget Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"email\": \"muzamilhuss4@gmail.com\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}reset-password"
+							},
+							"response": []
+						},
+						{
+							"name": "Validate Otp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"muzamilhuss4@gmail.com\",\r\n    \"otp\": \"5630\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}validate-otp"
+							},
+							"response": []
+						},
+						{
+							"name": "Set New Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"muzamilhuss4@gmail.com\",\r\n    \"otp\": \"5630\",\r\n    \"password\": \"muzamil123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}set-new-password"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User Side",
+			"item": [
+				{
+					"name": "App",
+					"item": [
+						{
+							"name": "Create App",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"name\":\"Hello\",\r\n        \"description\":\"asdasdasdd\",\r\n        \"metaDescription\":\"asdasdasd\",\r\n        \"image\":\"2\",\r\n        \"subscription\":3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}app-view/"
+							},
+							"response": []
+						},
+						{
+							"name": "GET App Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}app-view/2"
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE App",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "id",
+										"value": "1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}app-view/",
+									"host": [
+										"{{baseUrl}}app-view"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update App",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"3\",\r\n    \"name\": \"Hello\",\r\n    \"description\": \"asdasdasdasdasdasdasdd\",\r\n    \"metaDescription\": \"asdaadasdasdadsdasd\",\r\n    \"image\": \"2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}app-view/"
+							},
+							"response": []
+						},
+						{
+							"name": "Query App",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{baseUrl}}app-view-list?name=helloasd",
+									"host": [
+										"{{baseUrl}}app-view-list"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "helloasd"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Subscription",
+					"item": [
+						{
+							"name": "Subscription Plans",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}subscription-plans/"
+							},
+							"response": []
+						},
+						{
+							"name": "Subscribe to new plan",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subscription_plan\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}user-subscription/"
+							},
+							"response": []
+						},
+						{
+							"name": "unsubscribe",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subscription_plan_id\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}user-subscription/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Upload File",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "2DyGWs1Fi/Hisab Kitab White.webp"
+								}
+							]
+						},
+						"url": "{{baseUrl}}upload-file"
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": {
+					"headerPrefix": "token",
+					"addTokenTo": "header"
+				}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000/",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "ecb4a59f7186c40fafcd1ef1ae8ea57d46d99f08",
+			"type": "string"
+		}
+	]
+}
